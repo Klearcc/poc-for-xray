@@ -3,7 +3,7 @@
 Daily updates and improvements to POC.
 
 
-～xxxxxxx～
+~xxxxxxx~
 Boring and stupid idea.
 
 Let's work together and use Nuclei..
